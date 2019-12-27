@@ -1,0 +1,4 @@
+---
+
+rasa_install_location: "/var/rasa/rasax"
+rasa_config_location: "/data/configs/voice/rasa/data"
