@@ -1,4 +1,4 @@
 #!/bin/bash
 
-source {{ deepspeech_install_location }}/bin/activate
-deepspeech-server --config {{ deepspeech_server_config_path }}
+source {{ rasa_install_location }}/bin/activate
+rasa x --enable-api --config {{ rasa_config_location }}/config.yml -m {{ rasa_config_location }}/models/ --data {{ rasa_config_location }}/data --endpoints {{ rasa_config_location }}/endpoints.yml
