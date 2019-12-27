@@ -1,0 +1,15 @@
+[Unit]
+Description=Rasa X Chat Bot
+After=autofs.service data.mount
+Requires=autofs.service data.mount
+RequiresMountsFor=/data
+ConditionPathIsMountPoint=/data
+
+[Service]
+PIDFile=/run/rasa-x
+Environment=CUDA_VISIBLE_DEVICES=
+ExecStart={{ rasa_install_location }}/run_rasa.sh
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

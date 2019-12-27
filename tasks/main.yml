@@ -1,0 +1,41 @@
+---
+
+- name: Install python tools
+  package:
+    name:
+      - virtualenv
+      - python3
+      - python3-dev
+      - python3-pip
+    state: present
+
+- name: Install requirements
+  pip: 
+    name:
+      - rasa-x
+    extra_args: --extra-index-url https://pypi.rasa.com/simple
+    virtualenv: "{{ rasa_install_location }}"
+    virtualenv_python: python3
+
+- name: Rasa X run script
+  template:
+    src: run_rasa.sh.j2
+    dest: "{{ rasa_install_location }}/run_rasa.sh"
+    mode: "0777"
+    owner: root
+    group: root
+
+- name: Rasa X service unit file
+  template:
+    src: rasa.service.j2
+    dest: /etc/systemd/system/rasa.service
+    mode: "0755"
+    owner: root
+    group: root
+
+- name: Register, enable, and start deepspeech-server service
+  systemd:
+    name: rasa
+    state: started
+    enabled: yes
+    daemon_reload: yes
